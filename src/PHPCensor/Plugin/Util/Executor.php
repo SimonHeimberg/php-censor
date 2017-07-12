@@ -182,9 +182,14 @@ class Executor
      */
     public function executePlugin($plugin, $options)
     {
-        $class = $plugin;
+        $class = strstr($plugin, ' - ', true);
+        if (!$class) {
+            $class = $plugin;
+
+        } elseif(strlen($class) !== strlen($plugin)) {
+        }
         if (!class_exists($class)) {
-            $class = str_replace('_', ' ', $plugin);
+            $class = str_replace('_', ' ', $class);
             $class = ucwords($class);
             $class = 'PHPCensor\\Plugin\\' . str_replace(' ', '', $class);
 
